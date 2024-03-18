@@ -8,6 +8,11 @@ msg_lang = {
         'uz': "Telefon raqamingizni yuboring 📞⬇️",
         'ru': "Отправьте свой номер телефона 📞⬇️",
         'en': "Send your phone number 📞⬇️",
+    },
+    'send_link': {
+        'uz': "Youtube videoning linkini yuboring",
+        'ru': "Пришлите ссылку видео ютуб",
+        'en': "Send the link of the youtube video"
     }
 }
 

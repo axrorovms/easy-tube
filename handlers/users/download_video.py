@@ -1,8 +1,15 @@
 from aiogram import types 
 from aiogram.dispatcher import FSMContext
+from youtube_transcript_api import YouTubeTranscriptApi as yta
 from loader import dp, db 
+from func import get_transcript_from_video 
 from data.translate import msg_lang
 from states.youtube_states import Youtube
+from utils.validation import valid_video_url
+from utils.ask_gpt import ask_gpt
+import re
+
+VIDEO_ID_PATTERN = re.compile(r"(?<=v=)[\w-]+")
 
 @dp.message_handler(lambda x: x.text in ("Download video 📥", "Video yuklash 📥", "Скачать видео 📥")) 
 async def send_link_to_download(msg: types.Message):
@@ -12,41 +19,37 @@ async def send_link_to_download(msg: types.Message):
     await Youtube.first()
 
 @dp.message_handler(state=Youtube.link)
-async def download_you_tube_video(msg: types.Message, state=FSMContext):
+async def summarize_you_tube_video(msg: types.Message, state=FSMContext):
+    print("entered to state")
     lang = db.select_user_lang(tg_id=msg.from_user.id)
-    from googleapiclient.discovery import build
-from pytube import YouTube
+    valid = valid_video_url(msg.text)
+    print('before if')
+    if not valid:
+        await msg.answer("please enter youtube video url") 
+        return
+    print('after if')
+    match = VIDEO_ID_PATTERN.search(msg.text)
+    vid_id = match.group(0)
+    data = yta.get_transcript(vid_id)
+    transcript_segments = []
+    for value in data:
+        for key, val in value.items():
+            if key == 'text':
+               transcript_segments.append(val)
+    result = ' '.join(transcript_segments)
+    print('got transcript')
+    with open('transcript.txt', 'w') as file:
+        file.write(result)
+    print("wrote to file")
+    request = "Summarize the transcript from youtube video,write understable summarizing for the video and nothin more: \n" + result
+    
+    txt=ask_gpt(request)
+    print('the end')
+    await msg.answer(txt)
+    await state.finish()
 
-# Set your API key
-api_key = 'YOUR_API_KEY'
-
-
-youtube = build('youtube', 'v3', developerKey=api_key)
-
-
-channel_id = 'UC_x5XG1OV2P6uZZ5FSM9Ttw'  # Example channel ID (Google Developers)
-
-playlist_response = youtube.channels().list(
-    part='contentDetails',
-    id=channel_id
-).execute()
-playlist_id = playlist_response['items'][0]['contentDetails']['relatedPlaylists']['uploads']
-
-
-playlist_items = youtube.playlistItems().list(
-    part='snippet',
-    playlistId=playlist_id,
-    maxResults=5
-).execute()
-
-for item in playlist_items['items']:
-    video_title = item['snippet']['title']
-    video_id = item['snippet']['resourceId']['videoId']
-    video_url = f'https://www.youtube.com/watch?v={video_id}'
-    print(f'Title: {video_title}\nURL: {video_url}\n')
-
-
-
+    
+    
 
 
 
