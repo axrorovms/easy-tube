@@ -7,13 +7,10 @@ def get_main_menu(lang):
     res = ReplyKeyboardMarkup(resize_keyboard=True)
     btn_lang = btn_lang_translate['main_menu']
     res.row(
-        KeyboardButton(btn_lang['video_download'][lang]), KeyboardButton(btn_lang['download_video_music'][lang])
+        KeyboardButton(btn_lang['video_download'][lang]), KeyboardButton(btn_lang['summarize_video'][lang])
     )
     res.row(
-        KeyboardButton(btn_lang['summarize_video'][lang]), KeyboardButton(btn_lang['get_channel_info'][lang])
-    )
-    res.row(
-        KeyboardButton(btn_lang['settings'][lang]), KeyboardButton(btn_lang['donate'][lang])
+        KeyboardButton(btn_lang['settings'][lang])
     )
     return res
 

@@ -13,6 +13,16 @@ msg_lang = {
         'uz': "Youtube videoning linkini yuboring",
         'ru': "Пришлите ссылку видео ютуб",
         'en': "Send the link of the youtube video"
+    },
+    'main_menu': {
+        'uz': "Asosiy menyu",
+        'ru': "Главное меню",
+        'en': "Main menu"
+    },
+    'generating_ans': {
+        'uz': "Javobingiz generatsiya qilinmoqda♻️",
+        'ru': "Ваш ответ генерируется♻️",
+        'en': "Your response is being generated♻️"
     }
 }
 
@@ -58,5 +68,10 @@ btn_lang = {
             'ru': "Все юзеры 👥",
             'en': "All users 👥",
         }
+    },
+    'cancel': {
+            'uz': "Bekor qilish",
+            'ru': "Отмена",
+            'en': "Cancel"
     }
 }
