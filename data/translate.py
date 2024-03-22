@@ -48,20 +48,10 @@ btn_lang = {
             'ru': "Обобщить видео 📝",
             'en': "Summarize video 📝",
         },
-        'get_channel_info': {
-            'uz': "Kanal haqida...",
-            'ru': "Узнать о канале...",
-            'en': "About the channel...",
-        },
         'settings': {
             'uz': "Sozlamalar ⚙️",
             'ru': "Настройки ⚙️",
             'en': "Settings ⚙️",
-        },
-        'donate': {
-            'uz': "Donat 💸",
-            'ru': "Донат 💸",
-            'en': "Donate 💸",
         },
         'view_users': {
             'uz': "Barcha userlar 👥",
